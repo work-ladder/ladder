@@ -1,0 +1,45 @@
+{
+  "name": "@work-ladder/cli",
+  "version": "1.0.0",
+  "description": "一个前端 cli 工具",
+  "main": "index.js",
+  "bin": {
+    "wlc": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "wlc create my",
+    "lint:fix": "eslint --fix ."
+  },
+  "author": "",
+  "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./**/*.{js,jsx}": [
+      "eslint --fix src/**/*.js"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^7.9.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.0"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "chalk": "^4.1.0",
+    "commander": "^6.1.0",
+    "consolidate": "^0.16.0",
+    "download-git-repo": "^3.0.2",
+    "ejs": "^3.1.5",
+    "fs-extra": "^9.0.1",
+    "inquirer": "^7.3.3",
+    "metalsmith": "^2.3.0",
+    "ncp": "^2.0.0",
+    "ora": "^5.1.0"
+  }
+}
