@@ -14,6 +14,13 @@ program
     await require(path.join(__dirname, '../src/create'))(app)
   })
 
+program
+  .command('dev') // 后续开放 --mock 等参数
+  .description('启动项目')
+  .action(async (app, cmd) => {
+    await require(path.join(__dirname, '../src/dev'))
+  })
+
 program.arguments('<command>').action((cmd) => {
   program.outputHelp()
   console.log(`${chalk.red(`Unknown command ${chalk.yellow(cmd)}.`)}`)
