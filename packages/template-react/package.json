@@ -15,5 +15,6 @@
   "bugs": {
     "url": "https://github.com/work-ladder/react-template/issues"
   },
-  "homepage": "https://github.com/work-ladder/react-template#readme"
+  "homepage": "https://github.com/work-ladder/react-template#readme",
+  "gitHead": "1f2739d59c0e63ebe9473e47fe6d6b3a5ab8d14f"
 }
