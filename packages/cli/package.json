@@ -21,6 +21,10 @@
       "pre-commit": "lint-staged"
     }
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.org/"
+  },
   "lint-staged": {
     "./**/*.{js,jsx}": [
       "eslint --fix src/**/*.js"
@@ -74,5 +78,5 @@
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0"
   },
-  "gitHead": "1f2739d59c0e63ebe9473e47fe6d6b3a5ab8d14f"
+  "gitHead": "5f69a6299d07eda43d18b28c534bc833afbafd98"
 }
