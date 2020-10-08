@@ -35,7 +35,7 @@ program
   .action((name, cmd) => {
     if (minimist(process.argv.slice(3))._.length > 1) {
       log(
-        'Info: You provided more than one argument. The first one will be used as the appName, check it by cat-smoker --help.'
+        'Info: You provided more than one argument. The first one will be used as the appName, check it by work-ladder --help.'
       );
     }
 

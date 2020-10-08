@@ -6,7 +6,7 @@ const logInfo = console.log;
 const logError = console.error;
 const logWarn = console.warn;
 
-const prefix = 'cat-smoker-';
+const prefix = 'work-ladder-';
 
 module.exports.info = msg => logInfo(`${chalk.hex('#3333').bgBlue(`${prefix}INFO `)} ${msg}`);
 

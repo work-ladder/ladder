@@ -4,28 +4,19 @@
     "packages/@work-ladder/*",
     "packages/test/*"
   ],
-  "name": "cat-smoker",
+  "name": "work-ladder",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "npm run test",
     "lint": "eslint --fix packages/**/*.js packages/**/bin/*"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/xdnloveme/cat-smoker.git"
-  },
   "keywords": [
     "react",
     "cli",
     "webpack"
   ],
-  "author": "TangHaoyi",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/xdnloveme/cat-smoker/issues"
-  },
-  "homepage": "https://github.com/xdnloveme/cat-smoker#readme",
   "dependencies": {
     "commander": "^4.1.1"
   },
