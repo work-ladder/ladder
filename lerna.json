@@ -1,0 +1,9 @@
+{
+  "useWorkspaces": true,
+  "npmClient": "yarn",
+  "packages": [
+    "packages/@work-ladder/*",
+    "packages/test/*"
+  ],
+  "version": "0.0.6-alpha.0"
+}
