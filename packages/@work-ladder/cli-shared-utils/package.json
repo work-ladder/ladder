@@ -1,6 +1,6 @@
 {
   "name": "@work-ladder/cli-shared-utils",
-  "version": "0.0.7-alpha.1",
+  "version": "0.0.7-alpha.2",
   "description": "shared utils",
   "license": "MIT",
   "main": "index.js",
