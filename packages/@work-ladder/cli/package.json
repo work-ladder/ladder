@@ -37,5 +37,6 @@
     "readline": "^1.3.0",
     "slash": "^3.0.0",
     "validate-npm-package-name": "^3.0.0"
-  }
+  },
+  "gitHead": "3a623449ddcedbc3409785d72ecf7a0d915ca073"
 }
