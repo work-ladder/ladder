@@ -4,7 +4,7 @@ const writeFileTree = require('../utils/writeFileTree');
 const Interface = require('../generator/Interface');
 const { isBinaryFileSync } = require('isbinaryfile');
 const path = require('path');
-const templatePath = '../../../cli-service/generator/template';
+const templatePath = '../../../template-base';
 
 const renderFile = function (name) {
   // 如果是二进制流文件（比如favicon.ico）
