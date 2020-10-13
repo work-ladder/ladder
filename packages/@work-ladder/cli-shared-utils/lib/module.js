@@ -12,12 +12,12 @@ const createRequire = Module.createRequire || Module.createRequireFromPath || fu
   mod.filename = filename
   mod.paths = Module._nodeModulePaths(path.dirname(filename))
 
-  mod._compile(`module.exports = require;`, filename)
+  mod._compile('module.exports = require;', filename)
 
   return mod.exports
 }
 
-function resolveFallback (request, options) {
+function resolveFallback(request, options) {
   const isMain = false
   const fakeParent = new Module('', null)
 
@@ -57,7 +57,7 @@ exports.resolveModule = function (request, context) {
       resolvedPath = resolve(request, { paths: [context] })
     }
   } catch (e) {
-    console.log(e);
+    console.log(e)
   }
   return resolvedPath
 }
@@ -83,12 +83,12 @@ exports.clearModule = function (request, context) {
   }
 }
 
-function clearRequireCache (id, map = new Map()) {
+function clearRequireCache(id, map = new Map()) {
   const module = require.cache[id]
   if (module) {
     map.set(id, true)
     // Clear children modules
-    module.children.forEach(child => {
+    module.children.forEach((child) => {
       if (!map.get(child.id)) clearRequireCache(child.id, map)
     })
     delete require.cache[id]

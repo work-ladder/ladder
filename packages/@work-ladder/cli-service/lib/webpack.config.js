@@ -1,10 +1,10 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const imageInlineSizeLimit = parseInt(
-  process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
-);
+  process.env.IMAGE_INLINE_SIZE_LIMIT || '10000', 10,
+)
 
 module.exports = {
   mode: 'development',
@@ -29,8 +29,8 @@ module.exports = {
         test: /\.css$/,
         use: [
           { loader: require.resolve('style-loader') },
-          { loader: require.resolve('css-loader') }
-        ]
+          { loader: require.resolve('css-loader') },
+        ],
       },
       {
         test: /\.m?js$/,
@@ -47,14 +47,12 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      templateParameters: (compilation) => {
-        return {
-          compilation,
-          webpackConfig: compilation.options,
-          'BASE_URL': '/'
-        };
-      },
+      templateParameters: (compilation) => ({
+        compilation,
+        webpackConfig: compilation.options,
+        BASE_URL: '/',
+      }),
       template: 'public/index.html',
     }),
   ],
-};
+}

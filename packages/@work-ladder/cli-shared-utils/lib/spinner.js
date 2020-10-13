@@ -13,13 +13,13 @@ module.exports.logWithSpinner = (symbol, msg) => {
   if (lastMsg) {
     spinner.stopAndPersist({
       symbol: lastMsg.symbol,
-      text: lastMsg.text
+      text: lastMsg.text,
     })
   }
-  spinner.text = ' ' + msg
+  spinner.text = ` ${msg}`
   lastMsg = {
-    symbol: symbol + ' ',
-    text: msg
+    symbol: `${symbol} `,
+    text: msg,
   }
   spinner.start()
 }
@@ -28,7 +28,7 @@ exports.stopSpinner = (persist) => {
   if (lastMsg && persist !== false) {
     spinner.stopAndPersist({
       symbol: lastMsg.symbol,
-      text: lastMsg.text
+      text: lastMsg.text,
     })
   } else {
     spinner.stop()

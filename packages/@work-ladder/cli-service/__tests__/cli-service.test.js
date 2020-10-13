@@ -1,6 +1,5 @@
-
-const cliService = require('..');
+const cliService = require('..')
 
 describe('cli-service', () => {
-  it('needs tests');
-});
+  it('needs tests')
+})

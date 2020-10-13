@@ -1,7 +1,7 @@
-const { execSync } = require('child_process');
-const LRUCache = require('lru-cache');
+const { execSync } = require('child_process')
+const LRUCache = require('lru-cache')
 
-let _hasGit;
+let _hasGit
 // 创建一个缓存区，长度为10，过期时间1000ms
 // 缓存项目的git status状态是否存在
 const _gitProjects = new LRUCache({
@@ -12,16 +12,16 @@ const _gitProjects = new LRUCache({
 // check if git installed
 module.exports.hasGit = function () {
   if (_hasGit !== undefined) {
-    return _hasGit;
+    return _hasGit
   }
 
   try {
-    execSync('git --version', { stdio: 'ignore' });
-    _hasGit = true;
-    return _hasGit;
+    execSync('git --version', { stdio: 'ignore' })
+    _hasGit = true
+    return _hasGit
   } catch (e) {
     _hasGit = false
-    return _hasGit;
+    return _hasGit
   }
 }
 

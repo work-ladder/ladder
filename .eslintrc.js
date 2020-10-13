@@ -27,6 +27,8 @@ module.exports = {
     'no-continue': 'off',
     'no-unused-expressions': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'no-plusplus': 'off',
     'no-return-await': 'off',
+    'import/order': 'off',
   },
 }

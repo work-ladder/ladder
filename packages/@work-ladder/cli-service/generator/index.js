@@ -1,4 +1,4 @@
-module.exports = api => {
+module.exports = (api) => {
   api.extendPackage({
     scripts: {
       start: 'wlc-service serve',
@@ -9,6 +9,5 @@ module.exports = api => {
       'react-dom': '^16.13.0',
     },
     browserslist: ['> 1%', 'last 2 versions'],
-  });
-
-};
+  })
+}
