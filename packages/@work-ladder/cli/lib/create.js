@@ -1,30 +1,30 @@
-const path = require('path');
-const fs = require('fs-extra');
-const inquirer = require('inquirer');
-const validateNpmPackageName = require('validate-npm-package-name');
-const { log, chalk } = require('@work-ladder/cli-shared-utils');
-const Creator = require('./generator/Creator');
+const path = require('path')
+const fs = require('fs-extra')
+const inquirer = require('inquirer')
+const validateNpmPackageName = require('validate-npm-package-name')
+const { log, chalk } = require('@work-ladder/cli-shared-utils')
+const Creator = require('./generator/Creator')
 
 const create = async (projectName, options) => {
-  const cwd = options.cwd || process.cwd();
-  const destDir = path.resolve(cwd, projectName);
+  const cwd = options.cwd || process.cwd()
+  const destDir = path.resolve(cwd, projectName)
 
-  const isValidate = validateNpmPackageName(projectName);
+  const isValidate = validateNpmPackageName(projectName)
 
   // 判断项目名是否符合规范
   if (!isValidate.validForNewPackages) {
-    log(`Invalid project name: "${projectName}", causes of this:`, 'red');
+    log(`Invalid project name: "${projectName}", causes of this:`, 'red')
     if (isValidate.errors && isValidate.errors.length > 0) {
-      log(`reason: ${isValidate.errors.join('')}`, 'red');
+      log(`reason: ${isValidate.errors.join('')}`, 'red')
     }
     if (isValidate.warnings && isValidate.warnings.length > 0) {
-      log(`reason: ${isValidate.warnings.join('')}`, 'yellow');
+      log(`reason: ${isValidate.warnings.join('')}`, 'yellow')
     }
-    process.exit(1);
+    process.exit(1)
   }
 
   // 判断项目是否有重名的文件夹
-  const isProjectExist = fs.existsSync(destDir);
+  const isProjectExist = fs.existsSync(destDir)
 
   if (isProjectExist) {
     const { ok } = await inquirer.prompt([
@@ -32,27 +32,28 @@ const create = async (projectName, options) => {
         name: 'ok',
         type: 'confirm',
         message: `Warning: 您的项目${chalk.cyan(
-          projectName
+          projectName,
         )}已存在，您的操作会导致当前项目${projectName}被覆盖，确定？`,
       },
-    ]);
+    ])
 
     if (!ok) {
-      return;
+      return
     }
 
-    console.log(`\nWill removing ${chalk.cyan(destDir)}...`);
-    await fs.remove(destDir);
+    console.log(`\nWill removing ${chalk.cyan(destDir)}...`)
+    await fs.remove(destDir)
   }
-  const creator = new Creator(projectName, destDir);
+  const creator = new Creator(projectName, destDir)
   creator.create(options)
   // await fs.ensureDir(destDir);
-};
+}
 
+// eslint-disable-next-line consistent-return
 module.exports = function (...args) {
   try {
-    return create(...args);
+    return create(...args)
   } catch (e) {
-    console.log(e);
+    console.log(e)
   }
-};
+}

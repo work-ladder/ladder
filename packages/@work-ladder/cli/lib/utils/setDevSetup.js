@@ -1,10 +1,10 @@
-const fs = require('fs-extra');
-const path = require('path');
+const fs = require('fs-extra')
+const path = require('path')
 const cmdShim = require('util').promisify(require('cmd-shim'))
 
 const linkBin = async function (src, dest) {
   if (!process.env.CAT_SMOKER_DEBUG_MODE) {
-    throw new Error(`linkBin 只能用于开发环境`)
+    throw new Error('linkBin 只能用于开发环境')
   }
   if (process.platform === 'win32') {
     await cmdShim(src, dest)
@@ -15,9 +15,9 @@ const linkBin = async function (src, dest) {
   }
 }
 
-module.exports = function setDevSetup (targetDir) {
+module.exports = function setDevSetup(targetDir) {
   return linkBin(
     require.resolve('@work-ladder/cli-service/bin/cli-service'),
-    path.join(targetDir, 'node_modules', '.bin', 'wlc-service')
-  );
-};
+    path.join(targetDir, 'node_modules', '.bin', 'wlc-service'),
+  )
+}

@@ -1,24 +1,24 @@
 #!/usr/bin/env node
 
-const slash = require('slash');
+const slash = require('slash')
 const fs = require('fs')
-const path = require('path');
+const path = require('path')
 
 // enter debug mode when creating test repo
 if (
   slash(process.cwd()).indexOf('/packages/test') > 0 && (
-    fs.existsSync(path.resolve(process.cwd(), '../@work-ladder')) ||
-    fs.existsSync(path.resolve(process.cwd(), '../../@work-ladder'))
+    fs.existsSync(path.resolve(process.cwd(), '../@work-ladder'))
+    || fs.existsSync(path.resolve(process.cwd(), '../../@work-ladder'))
   )
 ) {
   process.env.CAT_SMOKER_DEBUG_MODE = true
 }
 
-const program = require('commander');
-const minimist = require('minimist');
-const { log } = require('@work-ladder/cli-shared-utils');
+const program = require('commander')
+const minimist = require('minimist')
+const { log } = require('@work-ladder/cli-shared-utils')
 
-program.version(require('../package').version);
+program.version(require('../package').version)
 
 program
   .version(`@work-ladder/cli ${require('../package').version}`)
@@ -35,8 +35,8 @@ program
   .action((name, cmd) => {
     if (minimist(process.argv.slice(3))._.length > 1) {
       log(
-        'Info: You provided more than one argument. The first one will be used as the appName, check it by work-ladder --help.'
-      );
+        'Info: You provided more than one argument. The first one will be used as the appName, check it by work-ladder --help.',
+      )
     }
 
     const options = cleanArgs(cmd)
@@ -44,29 +44,27 @@ program
       options.forceGit = true
     }
 
-    require('../lib/create')(name, options);
-  });
+    require('../lib/create')(name, options)
+  })
 
 program
   .command('add', 'add module to exist project')
   .command('delete', 'delete a module from project')
 
-  .command('list', 'list all the modules');
+  .command('list', 'list all the modules')
 
 // 解析命令行参数
-program.parse(process.argv);
+program.parse(process.argv)
 
-
-
-function camelize (str) {
-  return str.replace(/-(\w)/g, (_, c) => c ? c.toUpperCase() : '')
+function camelize(str) {
+  return str.replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : ''))
 }
 
 // commander passes the Command object itself as options,
 // extract only actual options into a fresh object.
-function cleanArgs (cmd) {
+function cleanArgs(cmd) {
   const args = {}
-  cmd.options.forEach(o => {
+  cmd.options.forEach((o) => {
     const key = camelize(o.long.replace(/^--/, ''))
     // if an option is not present and Command has a method with the same name
     // it should not be copied

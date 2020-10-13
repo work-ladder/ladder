@@ -1,24 +1,24 @@
-const deepmerge = require('deepmerge');
-const mergeDeps = require('../utils/mergeDeps');
+const deepmerge = require('deepmerge')
+const mergeDeps = require('../utils/mergeDeps')
 
 const isPlainObject = function (obj) {
-  if (typeof obj !== 'object' || obj === null) return false;
+  if (typeof obj !== 'object' || obj === null) return false
 
-  let proto = obj;
+  let proto = obj
   while (Object.getPrototypeOf(proto) !== null) {
-    proto = Object.getPrototypeOf(proto);
+    proto = Object.getPrototypeOf(proto)
   }
 
-  return Object.getPrototypeOf(obj) === proto;
-};
+  return Object.getPrototypeOf(obj) === proto
+}
 
-const mergeArrayWithDedupe = (a, b) => Array.from(new Set([...a, ...b]));
+const mergeArrayWithDedupe = (a, b) => Array.from(new Set([...a, ...b]))
 
 module.exports = class Interface {
-  constructor (id, generator, pluginOptions) {
-    this.id = id;
-    this.generator = generator;
-    this.pluginOptions = pluginOptions;
+  constructor(id, generator, pluginOptions) {
+    this.id = id
+    this.generator = generator
+    this.pluginOptions = pluginOptions
   }
 
   /**
@@ -26,24 +26,24 @@ module.exports = class Interface {
    * @param {Object|Function} fields package字段名
    * @param {Object} options 设置options
    */
-  async extendPackage (fields, options = {}) {
+  async extendPackage(fields, options = {}) {
     const extendOptions = {
       prune: false,
       merge: true,
       warnIncompatibleVersions: true,
-    };
-    
-    if (typeof options === 'boolean') {
-      extendOptions.warnIncompatibleVersions = !options;
-    } else {
-      Object.assign(extendOptions, options);
     }
 
-    const pkg = this.generator.pkg;
-    const toMerge = typeof fields === 'function' ? fields(pkg) : fields;
+    if (typeof options === 'boolean') {
+      extendOptions.warnIncompatibleVersions = !options
+    } else {
+      Object.assign(extendOptions, options)
+    }
+
+    const { pkg } = this.generator
+    const toMerge = typeof fields === 'function' ? fields(pkg) : fields
     for (const key in toMerge) {
-      const value = toMerge[key];
-      const existing = pkg[key];
+      const value = toMerge[key]
+      const existing = pkg[key]
       if (isPlainObject(value) && (key === 'dependencies' || key === 'devDependencies')) {
         // use special version resolution merge
         pkg[key] = mergeDeps(
@@ -51,17 +51,17 @@ module.exports = class Interface {
           existing || {},
           value,
           this.generator.depSources,
-          extendOptions
-        );
+          extendOptions,
+        )
       } else if (!extendOptions.merge || !(key in pkg)) {
-        pkg[key] = value;
+        pkg[key] = value
       } else if (Array.isArray(value) && Array.isArray(existing)) {
-        pkg[key] = mergeArrayWithDedupe(existing, value);
+        pkg[key] = mergeArrayWithDedupe(existing, value)
       } else if (isObject(value) && isObject(existing)) {
-        pkg[key] = deepmerge(existing, value, { arrayMerge: mergeArrayWithDedupe });
+        pkg[key] = deepmerge(existing, value, { arrayMerge: mergeArrayWithDedupe })
       } else {
-        pkg[key] = value;
+        pkg[key] = value
       }
     }
   }
-};
+}

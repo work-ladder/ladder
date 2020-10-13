@@ -1,5 +1,3 @@
-const { clearConsole } = require('../utils/clearConsole');
-const sortObject = require('../utils/sortObject');
 const {
   hasGit,
   hasProjectGit,
@@ -9,124 +7,123 @@ const {
   execa,
   chalk,
   loadModule,
-} = require('@work-ladder/cli-shared-utils');
-const { defaults } = require('../options');
-const writeFileTree = require('../utils/writeFileTree');
-const Generator = require('./Generator');
-const getVersions = require('../utils/getVersions');
-const PackageManager = require('./PackageManager');
+} = require('@work-ladder/cli-shared-utils')
+const { clearConsole } = require('../utils/clearConsole')
+const sortObject = require('../utils/sortObject')
+const { defaults } = require('../options')
+const writeFileTree = require('../utils/writeFileTree')
+const Generator = require('./Generator')
+const getVersions = require('../utils/getVersions')
+const PackageManager = require('./PackageManager')
 
 module.exports = class Creator {
-  constructor (projectName, context) {
-    this.projectName = projectName;
-    this.context = context;
+  constructor(projectName, context) {
+    this.projectName = projectName
+    this.context = context
   }
 
-  async create (cliOptions, preset = null) {
-    const name = this.projectName;
-    const context = this.context;
+  async create(cliOptions, preset = null) {
+    const name = this.projectName
+    const { context } = this
 
-    clearConsole();
+    clearConsole()
 
-    const latestMinor = await getVersions();
+    const latestMinor = await getVersions()
 
     const pkg = {
       name,
       version: '0.1.0',
       private: true,
       devDependencies: {},
-    };
-
-    if (!preset) {
-      preset = defaults.presets['default'];
     }
 
-    preset.plugins['@work-ladder/cli-service'] = Object.assign({
-      projectName: name
-    }, preset)
+    if (!preset) {
+      preset = defaults.presets.default
+    }
 
-    const deps = Object.keys(preset.plugins);
-    deps.forEach(dep => {
-      pkg.devDependencies[dep] =
-        preset.plugins[dep].version || (/^@work-ladder/.test(dep) ? `~${latestMinor}` : `latest`);
-    });
+    preset.plugins['@work-ladder/cli-service'] = { projectName: name, ...preset }
 
-    const pm = new PackageManager(context, { pkg });
+    const deps = Object.keys(preset.plugins)
+    deps.forEach((dep) => {
+      pkg.devDependencies[dep] = preset.plugins[dep].version || (/^@work-ladder/.test(dep) ? `~${latestMinor}` : 'latest')
+    })
+
+    const pm = new PackageManager(context, { pkg })
 
     // write package.json
     await writeFileTree(context, {
       'package.json': JSON.stringify(pkg, null, 2),
-    });
+    })
 
     // check if git repository
-    const shouldInitGit = this.shouldInitGit(cliOptions);
+    const shouldInitGit = this.shouldInitGit(cliOptions)
     if (shouldInitGit) {
-      logWithSpinner(`🗃`, `初始化git仓库...`);
-      await this.run('git init');
+      logWithSpinner('🗃', '初始化git仓库...')
+      await this.run('git init')
     }
 
-    stopSpinner();
+    stopSpinner()
 
-    log(`⚙\u{fe0f}  安装脚手架插件, 这可能会花费一点时间...`);
-    log();
+    log('⚙\u{fe0f}  安装脚手架插件, 这可能会花费一点时间...')
+    log()
 
     if (process.env.CAT_SMOKER_DEBUG_MODE) {
       // debug mode
-      console.log(`${chalk.blueBright('[Work-ladder]: ')}${chalk.yellowBright('开启本地调试模式!\n')}`);
-      await require('../utils/setDevSetup.js')(context);
+      console.log(`${chalk.blueBright('[Work-ladder]: ')}${chalk.yellowBright('开启本地调试模式!\n')}`)
+      await require('../utils/setDevSetup.js')(context)
     } else {
-      await pm.install();
+      await pm.install()
     }
 
-    const plugins = await this.resolvePlugins(preset.plugins);
+    const plugins = await this.resolvePlugins(preset.plugins)
 
     const gen = new Generator(this.context, {
       name: this.projectName,
-      pkg: pkg,
+      pkg,
       plugins,
       pm,
-    });
+    })
 
-    log(`🚀  开始执行项目构造程序...`)
-    gen.generate();
+    log('🚀  开始执行项目构造程序...')
+    gen.generate()
 
-    await pm.install();
+    await pm.install()
   }
 
   // { id: options } => [{ id, apply, options }]
-  async resolvePlugins (rawPlugins) {
+  async resolvePlugins(rawPlugins) {
     // ensure cli-service is invoked first and sort
-    rawPlugins = sortObject(rawPlugins, ['@work-ladder/cli-service'], true);
-    const plugins = [];
+    rawPlugins = sortObject(rawPlugins, ['@work-ladder/cli-service'], true)
+    const plugins = []
     for (const id of Object.keys(rawPlugins)) {
-      const apply = loadModule(`${id}/generator`, this.context) || (() => {});
-      const options = rawPlugins[id] || {};
-      plugins.push({ id, apply, options });
+      const apply = loadModule(`${id}/generator`, this.context) || (() => {})
+      const options = rawPlugins[id] || {}
+      plugins.push({ id, apply, options })
     }
-    return plugins;
+    return plugins
   }
 
-  run (command, args) {
+  run(command, args) {
     if (!args) {
-      [command, ...args] = command.split(/\s+/);
+      [command, ...args] = command.split(/\s+/)
     }
-    return execa(command, args, { cwd: this.context });
+    return execa(command, args, { cwd: this.context })
   }
 
   // from vue cli tools function
-  shouldInitGit (cliOptions) {
+  shouldInitGit(cliOptions) {
     if (!hasGit()) {
-      return false;
+      return false
     }
     // --git
     if (cliOptions.forceGit) {
-      return true;
+      return true
     }
     // --no-git
     if (cliOptions.git === false || cliOptions.git === 'false') {
-      return false;
+      return false
     }
     // default: true unless already in a git repo
-    return !hasProjectGit(this.context);
+    return !hasProjectGit(this.context)
   }
-};
+}

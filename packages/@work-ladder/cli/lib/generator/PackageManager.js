@@ -1,4 +1,4 @@
-const { executeCommand } = require('../utils/executeCommand');
+const { executeCommand } = require('../utils/executeCommand')
 
 const PACKAGE_MANAGER_CONFIG = {
   npm: {
@@ -7,25 +7,25 @@ const PACKAGE_MANAGER_CONFIG = {
     upgrade: ['update', '--loglevel', 'error'],
     remove: ['uninstall', '--loglevel', 'error'],
   },
-};
+}
 
 module.exports = class PackageManager {
-  constructor (context, { pkg }) {
-    this.context = context;
-    this.pkg = pkg;
+  constructor(context, { pkg }) {
+    this.context = context
+    this.pkg = pkg
     // 先只支持npm
-    this.bin = 'npm';
+    this.bin = 'npm'
   }
-  
-  async runCommand (command, args) {
+
+  async runCommand(command, args) {
     return await executeCommand(
       this.bin,
       [...PACKAGE_MANAGER_CONFIG[this.bin][command], ...(args || [])],
-      this.context
-    );
+      this.context,
+    )
   }
 
-  async install () {
-    return await this.runCommand('install');
+  async install() {
+    return await this.runCommand('install')
   }
-};
+}

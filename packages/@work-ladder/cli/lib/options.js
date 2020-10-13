@@ -2,7 +2,7 @@ exports.defaultPreset = {
   useConfigFiles: false,
   cssPreprocessor: undefined,
   plugins: {
-    
+
   },
 }
 
@@ -13,6 +13,6 @@ exports.defaults = {
   packageManager: undefined,
   useTaobaoRegistry: undefined,
   presets: {
-    'default': exports.defaultPreset
-  }
+    default: exports.defaultPreset,
+  },
 }
