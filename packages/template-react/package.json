@@ -1,0 +1,24 @@
+{
+  "name": "@work-ladder/template-react",
+  "version": "0.0.4",
+  "description": "",
+  "main": "<%=main%>",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/work-ladder/react-template.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/work-ladder/react-template/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.org/"
+  },
+  "homepage": "https://github.com/work-ladder/react-template#readme",
+  "gitHead": "5f69a6299d07eda43d18b28c534bc833afbafd98"
+}
