@@ -44,8 +44,12 @@ const create = async (projectName, options) => {
     console.log(`\nWill removing ${chalk.cyan(destDir)}...`)
     await fs.remove(destDir)
   }
+  const templatePath = '../../template-base'
+  const templateDir = path.resolve(__dirname, templatePath)
+  const args = require(path.join(templateDir, 'prompt.js'))
+  const promptArgs = await inquirer.prompt(args)
 
-  const creator = new Creator(projectName, destDir, prompt)
+  const creator = new Creator(projectName, destDir, promptArgs)
   creator.create(options)
   // await fs.ensureDir(destDir);
 }
