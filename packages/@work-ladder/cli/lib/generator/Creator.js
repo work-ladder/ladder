@@ -46,7 +46,9 @@ module.exports = class Creator {
 
     const deps = Object.keys(preset.plugins)
     deps.forEach((dep) => {
-      pkg.devDependencies[dep] = preset.plugins[dep].version || (/^@work-ladder/.test(dep) ? `~${latestMinor}` : 'latest')
+      // pkg.devDependencies[dep] = preset.plugins[dep].version
+      // || (/^@work-ladder/.test(dep) ? `~${latestMinor}` : 'latest')
+      pkg.devDependencies[dep] = preset.plugins[dep].version || 'latest'
     })
 
     const pm = new PackageManager(context, { pkg })
