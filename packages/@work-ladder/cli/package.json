@@ -1,6 +1,6 @@
 {
   "name": "@work-ladder/cli",
-  "version": "0.0.7",
+  "version": "0.0.8-alpha.0",
   "keywords": [
     "react",
     "cli"
@@ -24,8 +24,8 @@
     "test": "wlc create test"
   },
   "dependencies": {
-    "@work-ladder/cli-service": "^0.0.7",
-    "@work-ladder/cli-shared-utils": "^0.0.7",
+    "@work-ladder/cli-service": "^0.0.8-alpha.0",
+    "@work-ladder/cli-shared-utils": "^0.0.8-alpha.0",
     "cmd-shim": "^4.0.1",
     "commander": "^4.1.1",
     "deepmerge": "^4.2.2",
