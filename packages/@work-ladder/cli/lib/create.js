@@ -44,7 +44,8 @@ const create = async (projectName, options) => {
     console.log(`\nWill removing ${chalk.cyan(destDir)}...`)
     await fs.remove(destDir)
   }
-  const creator = new Creator(projectName, destDir)
+
+  const creator = new Creator(projectName, destDir, prompt)
   creator.create(options)
   // await fs.ensureDir(destDir);
 }

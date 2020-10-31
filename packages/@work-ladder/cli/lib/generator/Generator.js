@@ -1,4 +1,5 @@
 const fs = require('fs')
+const ejs = require('ejs')
 const globby = require('globby')
 const { isBinaryFileSync } = require('isbinaryfile')
 const path = require('path')
@@ -7,7 +8,7 @@ const Interface = require('./Interface')
 
 const templatePath = '../../../template-base'
 
-const renderFile = function (name) {
+const renderFile = function (name, prompt) {
   // 如果是二进制流文件（比如favicon.ico）
   if (isBinaryFileSync(name)) {
     return fs.readFileSync(name) // 返回流
@@ -15,7 +16,7 @@ const renderFile = function (name) {
 
   const template = fs.readFileSync(name, 'utf-8')
 
-  return template
+  return ejs.render(template.toString(), prompt)
 }
 
 module.exports = class Generator {
@@ -35,13 +36,13 @@ module.exports = class Generator {
     }
   }
 
-  async generate() {
+  async generate(prompt) {
     this.initPlugins()
     const baseDir = path.resolve(__dirname, templatePath)
     // eslint-disable-next-line no-underscore-dangle
     const _files = await globby(['**'], { cwd: baseDir })
     const filesContentTree = _files.reduce((content, sourcePath) => {
-      content[sourcePath] = renderFile(path.resolve(baseDir, sourcePath))
+      content[sourcePath] = renderFile(path.resolve(baseDir, sourcePath), prompt)
       return content
     }, {})
 

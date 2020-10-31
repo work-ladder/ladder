@@ -17,9 +17,10 @@ const getVersions = require('../utils/getVersions')
 const PackageManager = require('./PackageManager')
 
 module.exports = class Creator {
-  constructor(projectName, context) {
+  constructor(projectName, context, prompt) {
     this.projectName = projectName
     this.context = context
+    this.pormpt = prompt
   }
 
   async create(cliOptions, preset = null) {
@@ -85,7 +86,7 @@ module.exports = class Creator {
     })
 
     log('🚀  开始执行项目构造程序...')
-    gen.generate()
+    gen.generate(this.pormpt)
 
     await pm.install()
   }

@@ -12,7 +12,7 @@
   "main": "lib/cli.js",
   "directories": {
     "lib": "lib",
-    "test": "__tests__"
+    "test": "wlc create test"
   },
   "files": [
     "lib"
@@ -29,6 +29,7 @@
     "cmd-shim": "^4.0.1",
     "commander": "^4.1.1",
     "deepmerge": "^4.2.2",
+    "ejs": "^3.1.5",
     "fs-extra": "^8.1.0",
     "globby": "^11.0.0",
     "inquirer": "^7.1.0",
