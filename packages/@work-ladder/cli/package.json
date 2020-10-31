@@ -15,7 +15,8 @@
     "test": "wlc create test"
   },
   "files": [
-    "lib"
+    "lib",
+    "template-base"
   ],
   "publishConfig": {
     "access": "public"
@@ -24,8 +25,8 @@
     "test": "wlc create test"
   },
   "dependencies": {
-    "@work-ladder/cli-service": "^0.0.8",
-    "@work-ladder/cli-shared-utils": "^0.0.9",
+    "@work-ladder/cli-service": "latest",
+    "@work-ladder/cli-shared-utils": "latest",
     "cmd-shim": "^4.0.1",
     "commander": "^4.1.1",
     "debug": "^4.2.0",

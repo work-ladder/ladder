@@ -1,6 +1,6 @@
 {
   "name": "@work-ladder/cli-service",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "service for App",
   "main": "lib/Service.js",
   "bin": {
