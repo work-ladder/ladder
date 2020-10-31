@@ -6,7 +6,7 @@ const path = require('path')
 const writeFileTree = require('../utils/writeFileTree')
 const Interface = require('./Interface')
 
-const templatePath = '../../../template-base'
+const templatePath = '../../template-base'
 
 const renderFile = function (name, prompt) {
   // 如果是二进制流文件（比如favicon.ico）
@@ -15,7 +15,6 @@ const renderFile = function (name, prompt) {
   }
 
   const template = fs.readFileSync(name, 'utf-8')
-
   return ejs.render(template.toString(), prompt)
 }
 
